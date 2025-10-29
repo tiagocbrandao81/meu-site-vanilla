@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Exemplo: Site Vanilla (HTML, CSS, JS)</title>
+  <meta name="description" content="Site simples para testar deploy na Vercel — apenas HTML, CSS e JavaScript vanilla." />
+
+  <!-- CSS inline para facilitar deploy como único arquivo -->
+  <style>
+    :root{
+      --accent: #0ea5a4;
+      --bg: #f8fafc;
+      --card: #fff;
+      --muted: #6b7280;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:#111}
+    .site{max-width:1100px;margin:24px auto;padding:0 20px}
+
+    /* Navbar */
+    header{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{font-weight:700;color:var(--accent)}
+    nav{display:flex;gap:16px;align-items:center}
+    nav a{color:inherit;text-decoration:none;font-weight:500}
+    .btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none}
+    .menu-toggle{display:none;border:1px solid #ddd;padding:6px;border-radius:6px;background:#fff}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:center;margin-top:18px}
+    .hero h1{margin:0 0 12px;font-size:28px}
+    .hero p{margin:0;color:var(--muted)}
+    .hero-card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 4px 12px rgba(16,24,40,0.04)}
+
+    /* Grid de produtos */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+    .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+    .card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+    .card h3{margin:10px 0 6px;font-size:16px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .price{font-weight:700;margin-top:8px}
+
+    /* Footer */
+    footer{margin:34px 0 60px;color:var(--muted);font-size:14px;display:flex;justify-content:space-between;align-items:center}
+
+    /* Responsivo */
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr}
+      nav{display:none}
+      .menu-toggle{display:inline-block}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header>
+      <div class="brand">Meu Brechó MVP</div>
+      <nav>
+        <a href="#produtos">Produtos</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato" class="btn">Contato</a>
+      </nav>
+      <button class="menu-toggle" aria-expanded="false">☰</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <h1>Peças únicas, precinhos justos</h1>
+          <p>Um exemplo simples de site estático com HTML, CSS e JavaScript (vanilla). Pronto para deploy na Vercel — sem frameworks.</p>
+
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <a class="btn" href="#produtos">Ver produtos</a>
+            <a href="#sobre" style="padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #e6e6e6;text-decoration:none;display:inline-flex;align-items:center">Como funciona</a>
+          </div>
+
+          <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px">
+            <div>Entrega em 3-7 dias</div>
+            <div>Troca em 7 dias</div>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <strong>Oferta do dia</strong>
+          <p style="margin:8px 0;color:var(--muted)">Vestido vermelho vintage — ótimo estado.</p>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+            <img src="https://picsum.photos/seed/veste/200/140" alt="vestido" style="width:96px;height:64px;object-fit:cover;border-radius:8px">
+            <div>
+              <div style="font-weight:700">R$ 79,90</div>
+              <div style="font-size:13px;color:var(--muted)">Frete grátis</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="produtos">
+        <h2 style="margin-top:30px">Produtos</h2>
+        <div class="grid" id="catalog">
+          <!-- Cards gerados pelo JS -->
+        </div>
+      </section>
+
+      <section id="sobre" style="margin-top:30px">
+        <h2>Sobre</h2>
+        <p style="color:var(--muted)">Este é um site de exemplo. Você pode editar os dados no arquivo HTML diretamente: imagens, títulos e preços. Para um catálogo dinâmico no futuro, substitua pelo Supabase ou outro backend.</p>
+      </section>
+
+      <section id="contato" style="margin-top:22px">
+        <h2>Contato</h2>
+        <form id="contactForm" class="card" style="display:block;gap:8px">
+          <label style="font-size:13px">Nome<input type="text" name="nome" required placeholder="Seu nome" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6e6e6;margin-top:6px"></label>
+          <label style="font-size:13px;margin-top:8px">Email<input type="email" name="email" required placeholder="seu@exemplo.com" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6e6e6;margin-top:6px"></label>
+          <label style="font-size:13px;margin-top:8px">Mensagem<textarea name="mensagem" rows="3" placeholder="Quero mais informações" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e6e6e6;margin-top:6px"></textarea></label>
+          <div style="margin-top:8px;display:flex;gap:8px;justify-content:flex-end">
+            <button type="submit" class="btn">Enviar</button>
+            <button type="reset" style="padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #e6e6e6">Limpar</button>
+          </div>
+        </form>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>© 2025 Meu Brechó MVP</div>
+      <div style="color:var(--muted)">Feito com ♥ — HTML • CSS • JS</div>
+    </footer>
+  </div>
+
+  <!-- JavaScript simples: cria um catálogo e lida com menu e envio do formulário -->
+  <script>
+    // Exemplo de dados do catálogo (pode editar aqui mesmo)
+    const produtos = [
+      {id:1,titulo:'Camisa listrada',preco:'R$ 39,90',img:'https://picsum.photos/seed/camisa/400/300',desc:'Boa condição, tamanho M'},
+      {id:2,titulo:'Jaqueta jeans',preco:'R$ 129,90',img:'https://picsum.photos/seed/jaqueta/400/300',desc:'Vintage, pouco uso'},
+      {id:3,titulo:'Saia estampada',preco:'R$ 59,90',img:'https://picsum.photos/seed/saia/400/300',desc:'Tamanho P'},
+      {id:4,titulo:'Blusa de seda',preco:'R$ 89,90',img:'https://picsum.photos/seed/blusa/400/300',desc:'Cor creme'},
+    ];
+
+    const catalog = document.getElementById('catalog');
+    function renderCatalog(){
+      catalog.innerHTML = '';
+      produtos.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.titulo}">
+          <h3>${p.titulo}</h3>
+          <p>${p.desc}</p>
+          <div class="price">${p.preco}</div>
+        `;
+        catalog.appendChild(card);
+      })
+    }
+    renderCatalog();
+
+    // Menu mobile
+    const toggle = document.querySelector('.menu-toggle');
+    toggle.addEventListener('click', () => {
+      const nav = document.querySelector('nav');
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      nav.style.display = expanded ? 'none' : 'flex';
+    });
+
+    // Form: aqui apenas simulamos envio — na prática envie para seu backend ou Supabase
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const obj = Object.fromEntries(data.entries());
+      // salva no localStorage e mostra confirmação
+      const storage = JSON.parse(localStorage.getItem('contatos') || '[]');
+      storage.push({id:Date.now(), ...obj});
+      localStorage.setItem('contatos', JSON.stringify(storage));
+      alert('Mensagem enviada! (simulada)\nNome: ' + obj.nome);
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
